@@ -15,7 +15,7 @@ type Props = {
 };
 
 const Countdown: React.FC<Props> = ({
-  minutes = 0.1,
+  minutes = 0.5,
   isPaused,
   onProgress,
   onEnd,
