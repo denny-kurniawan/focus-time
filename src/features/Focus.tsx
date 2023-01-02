@@ -3,9 +3,11 @@ import { TextInput } from 'react-native-paper';
 import { useState } from 'react';
 import RoundedButton from '../components/RoundedButton';
 
-type Props = {};
+type Props = {
+  addSubject: React.Dispatch<React.SetStateAction<string>>;
+};
 
-const Focus: React.FC<Props> = () => {
+const Focus: React.FC<Props> = ({ addSubject }) => {
   const [subject, setSubject] = useState<string>('');
 
   return (
@@ -18,7 +20,11 @@ const Focus: React.FC<Props> = () => {
           label="What would you like to focus on?"
         />
         <View style={styles.button}>
-          <RoundedButton title="+" size={50} />
+          <RoundedButton
+            title="+"
+            size={50}
+            onPress={() => addSubject(subject)}
+          />
         </View>
       </View>
     </View>
