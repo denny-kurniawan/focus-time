@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { useState } from 'react';
 import RoundedButton from '../components/RoundedButton';
+import { sizes } from '../utils/sizes';
 
 type Props = {
   addSubject: React.Dispatch<React.SetStateAction<string>>;
@@ -42,10 +43,10 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    marginRight: 10,
+    marginRight: sizes.sm,
   },
   inputContainer: {
-    padding: 25,
+    padding: sizes.lg,
     justifyContent: 'flex-start',
     flexDirection: 'row',
   },
