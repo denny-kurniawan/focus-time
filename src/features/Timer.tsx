@@ -5,6 +5,7 @@ import Countdown from '../components/Countdown';
 import RoundedButton from '../components/RoundedButton';
 import { sizes } from '../utils/sizes';
 import { colors } from '../utils/colors';
+import Timing from './Timing';
 
 const ONE_SECOND_IN_MS = 1000;
 const PATTERN = [
@@ -17,13 +18,13 @@ const PATTERN = [
 type Props = {
   focusSubject: string;
   onTimerEnd: Function;
-  clearSubject: Function;
+  clearSubject: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const Timer: React.FC<Props> = ({ focusSubject, onTimerEnd, clearSubject }) => {
-  const [isStarted, setIsStarted] = useState<Boolean>(false);
-  const [progress, setProgress] = useState<number>(1);
-  const [minutes, setMinutes] = useState<number>(0.1);
+  const [ isStarted, setIsStarted ] = useState<Boolean>(false);
+  const [ progress, setProgress ] = useState<number>(1);
+  const [ minutes, setMinutes ] = useState<number>(5);
 
   return (
     <View style={styles.container}>
@@ -48,12 +49,18 @@ const Timer: React.FC<Props> = ({ focusSubject, onTimerEnd, clearSubject }) => {
           style={{ height: sizes.sm }}
         />
       </View>
+      <View style={styles.timingWrapper}>
+        <Timing onChangeTime={setMinutes} />
+      </View>
       <View style={styles.buttonWrapper}>
         {isStarted ? (
           <RoundedButton title="Pause" onPress={() => setIsStarted(false)} />
         ) : (
           <RoundedButton title="Start" onPress={() => setIsStarted(true)} />
         )}
+      </View>
+      <View style={styles.clearSubjectWrapper}>
+        <RoundedButton size={50} title='-' onPress={() => clearSubject('')} />
       </View>
     </View>
   );
@@ -70,12 +77,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  timingWrapper: {
+    flex: 0.1,
+    flexDirection: 'row',
+    paddingTop: sizes.xxl,
+  },
   buttonWrapper: {
     flex: 0.3,
     flexDirection: 'row',
-    padding: sizes.lg,
+    padding: sizes.md,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  clearSubjectWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   title: {
     color: colors.white,

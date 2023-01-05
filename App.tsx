@@ -3,8 +3,6 @@ import {
   StyleSheet,
   StatusBar,
   SafeAreaView,
-  View,
-  Text,
 } from 'react-native';
 import { colors } from './src/utils/colors';
 import Focus from './src/features/Focus';
@@ -12,7 +10,7 @@ import { useState } from 'react';
 import Timer from './src/features/Timer';
 
 const App: React.FC = () => {
-  const [currentSubject, setCurrentSubject] = useState<string>('');
+  const [ currentSubject, setCurrentSubject ] = useState<string>('');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -21,8 +19,8 @@ const App: React.FC = () => {
       ) : (
         <Timer
           focusSubject={currentSubject}
-          onTimerEnd={() => {}}
-          clearSubject={() => {}}
+          onTimerEnd={() => { }}
+          clearSubject={() => setCurrentSubject('')}
         />
       )}
     </SafeAreaView>
