@@ -7,7 +7,7 @@ import { colors } from './src/utils/colors';
 
 const App: React.FC = () => {
   const [currentSubject, setCurrentSubject] = useState<string>('');
-  const [history, setHistory] = useState<string[]>(['temp']);
+  const [history, setHistory] = useState<string[]>([]);
 
   return (
     <SafeAreaView style={styles.container}>
