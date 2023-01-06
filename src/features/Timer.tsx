@@ -34,7 +34,7 @@ const Timer: React.FC<Props> = ({ focusSubject, onTimerEnd, clearSubject }) => {
   // };
 
   useEffect(() => {
-    if (!progress) {
+    if (progress === 0) {
       Vibration.vibrate(PATTERN);
       setIsStarted(false);
       setProgress(1);

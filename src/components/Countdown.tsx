@@ -22,7 +22,7 @@ const Countdown: React.FC<Props> = ({
 }) => {
   const interval = useRef<any>(null);
 
-  const [millis, setMillis] = useState<number>(0);
+  const [millis, setMillis] = useState<number>(minutes * 60 * 1000);
 
   const reset = () => setMillis(minutesToMillis(minutes));
 
