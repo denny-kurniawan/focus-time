@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { useEffect, useState, useRef } from 'react';
 import { sizes } from '../utils/sizes';
 import { colors } from '../utils/colors';
@@ -10,25 +10,27 @@ const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
 type Props = {
   minutes: number;
   isPaused: Boolean;
-  onProgress: Function;
-  onEnd: Function;
+  onProgress: React.Dispatch<React.SetStateAction<number>>;
+  // onEnd: (reset: Function) => void;
 };
 
 const Countdown: React.FC<Props> = ({
-  minutes = 0.5,
+  minutes = 0.1,
   isPaused,
   onProgress,
-  onEnd,
+  // onEnd,
 }) => {
   const interval = useRef<any>(null);
 
   const [millis, setMillis] = useState<number>(0);
 
+  const reset = () => setMillis(minutesToMillis(minutes));
+
   const countDown = () => {
     setMillis((time) => {
       if (time === 0) {
         clearInterval(interval.current);
-        onEnd();
+        // onEnd(reset);
         return time;
       }
       const timeLeft = time - 1000;
@@ -42,6 +44,8 @@ const Countdown: React.FC<Props> = ({
 
   useEffect(() => {
     onProgress(millis / minutesToMillis(minutes));
+
+    if (millis == 0) reset();
   }, [millis]);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, Vibration } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ProgressBar } from 'react-native-paper';
 import Countdown from '../components/Countdown';
 import RoundedButton from '../components/RoundedButton';
@@ -17,14 +17,29 @@ const PATTERN = [
 
 type Props = {
   focusSubject: string;
-  onTimerEnd: Function;
+  onTimerEnd: () => void;
   clearSubject: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const Timer: React.FC<Props> = ({ focusSubject, onTimerEnd, clearSubject }) => {
-  const [ isStarted, setIsStarted ] = useState<Boolean>(false);
-  const [ progress, setProgress ] = useState<number>(1);
-  const [ minutes, setMinutes ] = useState<number>(5);
+  const [isStarted, setIsStarted] = useState<Boolean>(false);
+  const [progress, setProgress] = useState<number>(1);
+  const [minutes, setMinutes] = useState<number>(0.1);
+
+  // const onEnd = (reset: Function) => {
+  //   Vibration.vibrate(PATTERN);
+  //   setIsStarted(false);
+  //   setProgress(1);
+  //   reset();
+  // };
+
+  useEffect(() => {
+    if (!progress) {
+      Vibration.vibrate(PATTERN);
+      setIsStarted(false);
+      setProgress(1);
+    }
+  }, [progress]);
 
   return (
     <View style={styles.container}>
@@ -33,9 +48,7 @@ const Timer: React.FC<Props> = ({ focusSubject, onTimerEnd, clearSubject }) => {
           minutes={minutes}
           isPaused={!isStarted}
           onProgress={setProgress}
-          onEnd={() => {
-            Vibration.vibrate(PATTERN);
-          }}
+          // onEnd={onEnd}
         />
         <View style={{ paddingTop: sizes.xxl }}>
           <Text style={styles.title}>Focusing on:</Text>
@@ -60,7 +73,7 @@ const Timer: React.FC<Props> = ({ focusSubject, onTimerEnd, clearSubject }) => {
         )}
       </View>
       <View style={styles.clearSubjectWrapper}>
-        <RoundedButton size={50} title='-' onPress={() => clearSubject('')} />
+        <RoundedButton size={50} title="-" onPress={() => clearSubject('')} />
       </View>
     </View>
   );
@@ -91,7 +104,7 @@ const styles = StyleSheet.create({
   },
   clearSubjectWrapper: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   title: {
     color: colors.white,
