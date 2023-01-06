@@ -7,7 +7,10 @@ type Props = {
 };
 
 const FocusHistory: React.FC<Props> = ({ history }) => {
-  if (!history || !history.length) return null;
+  if (!history || !history.length)
+    return (
+      <Text style={styles.title}>We haven't focused on anything yet!</Text>
+    );
 
   const renderItem = ({ item }: { item: string }) => (
     <Text style={styles.item}>- {item}</Text>

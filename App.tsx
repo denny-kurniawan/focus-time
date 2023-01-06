@@ -19,7 +19,9 @@ const App: React.FC = () => {
       ) : (
         <Timer
           focusSubject={currentSubject}
-          onTimerEnd={() => {}}
+          onTimerEnd={(subject) => {
+            setHistory((history) => [...history, subject]);
+          }}
           clearSubject={() => setCurrentSubject('')}
         />
       )}

@@ -18,7 +18,7 @@ const PATTERN = [
 
 type Props = {
   focusSubject: string;
-  onTimerEnd: () => void;
+  onTimerEnd: (string: string) => void;
   clearSubject: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -41,6 +41,7 @@ const Timer: React.FC<Props> = ({ focusSubject, onTimerEnd, clearSubject }) => {
       Vibration.vibrate(PATTERN);
       setIsStarted(false);
       setProgress(1);
+      onTimerEnd(focusSubject);
     }
   }, [progress]);
 
